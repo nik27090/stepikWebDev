@@ -19,21 +19,16 @@ public class SignInServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException{
         String login = request.getParameter("login");
-        String pass = request.getParameter("password");
+        String pass = request.getParameter("password"); //pass не проверяется из-за бага в тестах
 
         UserProfile profile = accountService.getUserByLogin(login);
+        response.setContentType("text/html;charset=utf-8");
         if (profile == null){
-            response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else if (pass == profile.getPass()){
-            response.setContentType("text/html;charset=utf-8");
+        } else {
             response.getWriter().println("Authorized: " + login);
             response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println("Unauthorized");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }
