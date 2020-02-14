@@ -10,11 +10,11 @@ public class Main {
         dbService.printConnectInfo();
 
         try {
-            long userId =dbService.addUser("tully");
+            long userId = dbService.addUser("tully");
             System.out.println("Added user id: " + userId);
 
             UsersDataSet dataSet = dbService.getUser(userId);
-            System.out.println("User data set: " + dataSet);
+            System.out.println("User data set: " + dataSet.toString());
 
         } catch (DBException e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@ public class DBService {
     private final SessionFactory sessionFactory;
 
     public DBService() {
-        Configuration configuration = getH2Configuration();
+        Configuration configuration = getMySqlConfiguration();
         sessionFactory = createSessionFactory(configuration);
     }
 
@@ -75,7 +75,7 @@ public class DBService {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
 
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", URL);
         configuration.setProperty("hibernate.connection.username", USER);
