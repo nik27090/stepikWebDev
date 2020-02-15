@@ -1,8 +1,11 @@
 package dbService.dao;
 
 import dbService.dataSets.UsersDataSet;
+import dbService.factory.HibernateSessionFactoryUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,24 +13,35 @@ import javax.persistence.criteria.Root;
 
 
 public class UsersDAO {
-    private Session session;
-
-    public UsersDAO(Session session){
-        this.session = session;
+    public UsersDataSet findByLogin(String login){
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UsersDataSet.class, login);
     }
 
-    public UsersDataSet get(long id) throws HibernateException {
-        return (UsersDataSet) session.get(UsersDataSet.class, id);
+    public UsersDataSet findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(UsersDataSet.class, id);
     }
 
-    public long getUserId(String name) throws HibernateException {
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<UsersDataSet> criteria = criteriaBuilder.createQuery(UsersDataSet.class);
-        Root<UsersDataSet> usersDataSetRoot = criteria.from(UsersDataSet.class);
-        return ((UsersDataSet) criteria.where(criteriaBuilder.equal(usersDataSetRoot.get("name"), name))).getId();
+    public void save(UsersDataSet user){
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(user);
+        tx1.commit();
+        session.close();
     }
 
-    public long insertUser(String name) throws HibernateException {
-        return (Long) session.save(new UsersDataSet(name));
+    public void update(UsersDataSet user){
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(user);
+        tx1.commit();
+        session.close();
+    }
+
+    public void delete(UsersDataSet user) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(user);
+        tx1.commit();
+        session.close();
     }
 }

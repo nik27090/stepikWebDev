@@ -1,8 +1,8 @@
 package main;
 
 
-import accounts.AccountService;
-import accounts.UserProfile;
+import accounts.UserService;
+import dbService.dataSets.UsersDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -14,13 +14,13 @@ import servlets.SignUpServlet;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        AccountService accountService = new AccountService();
+        UserService userService = new UserService();
 
-        accountService.addNewUser(new UserProfile("admin"));
+        userService.saveUser(new UsersDataSet("admin","admin"));
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignUpServlet(userService)), "/signup");
+        context.addServlet(new ServletHolder(new SignInServlet(userService)), "/signin");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("templates");
