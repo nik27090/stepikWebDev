@@ -2,14 +2,8 @@ package dbService.dao;
 
 import dbService.dataSets.UsersDataSet;
 import dbService.factory.HibernateSessionFactoryUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 
 public class UsersDAO {

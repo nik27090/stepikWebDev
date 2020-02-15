@@ -1,7 +1,5 @@
 package dbService.dataSets;
 
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 
 @Entity
